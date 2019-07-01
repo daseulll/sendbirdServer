@@ -1,0 +1,6 @@
+.env
+__pycache__/
+accessKeys.csv
+db.sqlite3
+zappa_settings.json
+node_modules
