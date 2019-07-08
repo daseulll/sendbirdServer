@@ -1,19 +1,17 @@
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import serializers
-from . models import ChatList
+from . models import User, ChatRoom, Message
+
 
 class ChatListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChatList
-        fields = ('room', 'created_at')
+        model = ChatRoom
+        fields = ('id', 'user1', 'user2', 'roomname', 'channel_url', 'created_at')
+        depth=1
 
-class ChatListCreateSerializer(serializers.ModelSerializer):
+class MessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ChatList
-        fields = ('room', 'created_at')
-
-    def __init__(self, request, *args, **kwargs):
-        super(ChatListCreateSerializer, self).__init__(self, request, *args, **kwargs)
-
-        return print(self.context['request'])
-    
-
+        model = Message
+        fields = ('channel', 'sender', 'message', 'message_id')
+        depth = 2
