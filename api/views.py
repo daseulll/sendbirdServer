@@ -1,4 +1,5 @@
 import json
+from django.db.models import Q
 from base64 import b64decode
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -34,12 +35,22 @@ class ProccessHookView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ChatListAPIView(APIView):
+class ChatListAPIView(generics.ListAPIView):
     permission_classes = (AllowAny,)
+    queryset = ChatRoom.objects.filter()
+    serializer_class = ChatListSerializer
 
-    def get(self, request):
-        serializer = ChatListSerializer(ChatRoom.objects.filter(), many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_queryset(self, *args, **kwargs):
+        param = self.kwargs.get("param", None)
+        if param:
+            queryset = ChatRoom.objects.filter(
+                Q(user1__email__contains=param) | Q(user1__nickname__contains=param) |
+                Q(user2__email__contains=param) | Q(user2__nickname__contains=param)
+            )
+        else: 
+            queryset = ChatRoom.objects.filter().order_by('-id')[:30]
+        return queryset
+
 
 class MessageAPIView(APIView):
     permission_classes = (AllowAny,)

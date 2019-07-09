@@ -1,6 +1,11 @@
 .env
+handler*
+*.gz
+
 __pycache__/
 accessKeys.csv
 db.sqlite3
 zappa_settings.json
 node_modules
+
+local_settings

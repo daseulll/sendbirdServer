@@ -13,5 +13,5 @@ class ChatListSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('channel', 'sender', 'message', 'message_id')
+        fields = ('channel', 'sender', 'message', 'message_id', 'created_at')
         depth = 2
