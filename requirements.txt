@@ -1,5 +1,5 @@
 # python==3.6.8
-Django==2.0.3
+Django==2.2.13
 djangorestframework==3.9.4
 django-s3-storage==0.12.4
 zappa==0.48.2
